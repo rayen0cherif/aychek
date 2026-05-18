@@ -1,0 +1,56 @@
+<div class="max-w-5xl mx-auto px-4 py-12">
+  <button (click)="back.emit()" class="text-sm text-zinc-500 hover:text-zinc-900 mb-8 transition-colors">
+    &larr; Back to directory
+  </button>
+
+  <p *ngIf="isLoading()" class="py-12 text-center text-sm text-zinc-400">Loading...</p>
+  <p *ngIf="error()" class="py-12 text-center text-sm text-red-600">{{ error() }}</p>
+
+  <div *ngIf="company()" class="grid grid-cols-1 lg:grid-cols-5 gap-10">
+
+    <div class="lg:col-span-2">
+      <h1 class="text-3xl font-semibold tracking-tight text-zinc-900 mb-3">{{ company()!.name }}</h1>
+      <div class="flex flex-wrap gap-2 mb-6">
+        <span class="text-xs font-medium bg-zinc-100 text-zinc-600 px-2 py-1">{{ company()!.sector }}</span>
+        <span class="text-xs font-medium border border-zinc-200 text-zinc-500 px-2 py-1">{{ company()!.country }}</span>
+        <span class="text-xs font-medium border border-zinc-200 text-zinc-500 px-2 py-1">Est. {{ company()!.foundedYear
+          }}</span>
+      </div>
+      <p class="text-sm text-zinc-600 leading-relaxed mb-6">{{ company()!.description }}</p>
+      <div class="pt-6 border-t border-zinc-200">
+        <p class="text-sm text-zinc-500"><span class="font-medium text-zinc-900">{{ company()!.employeeCount }}</span>
+          employees</p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-3 border border-zinc-200 bg-white flex flex-col h-[480px]">
+      <div class="px-4 py-3 border-b border-zinc-200 bg-zinc-50 flex justify-between items-center">
+        <span class="text-sm font-medium text-zinc-900">Ask about this company</span>
+      </div>
+
+      <div class="flex-1 p-5 overflow-y-auto">
+        <p *ngIf="!aiResponse() && !isAiLoading()" class="text-sm text-zinc-400 mt-16 text-center">
+          Type a question to analyze this company's profile.
+        </p>
+        <p *ngIf="isAiLoading()" class="text-sm text-zinc-500 mt-16 text-center animate-pulse">
+          Generating response...
+        </p>
+        <p *ngIf="aiResponse() && !isAiLoading()" class="text-sm text-zinc-800 leading-relaxed whitespace-pre-wrap">
+          {{ aiResponse() }}
+        </p>
+        <p *ngIf="aiError()" class="text-sm text-red-600 mt-4">{{ aiError() }}</p>
+      </div>
+
+      <div class="px-4 py-3 border-t border-zinc-200 bg-zinc-50">
+        <div class="flex gap-2">
+          <input type="text" placeholder="What does this company do?"
+            class="flex-1 px-3 py-2 bg-white border border-zinc-300 text-sm placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 transition-colors"
+            [ngModel]="question()" (ngModelChange)="question.set($event)" (keyup.enter)="ask()"
+            [disabled]="isAiLoading()" />
+          <button (click)="ask()" [disabled]="isAiLoading() || !question().trim()"
+            class="px-5 py-2 bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors">Ask</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
