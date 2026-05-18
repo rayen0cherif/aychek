@@ -9,7 +9,19 @@
   <div *ngIf="company()" class="grid grid-cols-1 lg:grid-cols-5 gap-10">
 
     <div class="lg:col-span-2">
-      <h1 class="text-3xl font-semibold tracking-tight text-zinc-900 mb-3">{{ company()!.name }}</h1>
+      <div class="flex items-center justify-between mb-3">
+        <h1 class="text-3xl font-semibold tracking-tight text-zinc-900">{{ company()!.name }}</h1>
+        <button 
+          (click)="companyService.toggleWatchlist(company()!.id)"
+          class="px-3 py-1.5 text-xs font-medium border transition-colors flex items-center gap-1.5"
+          [ngClass]="watchlistIds().has(company()!.id) ? 'bg-amber-50 text-amber-600 border-amber-200 hover:bg-amber-100' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-50'"
+        >
+          <svg class="w-3.5 h-3.5" [ngClass]="watchlistIds().has(company()!.id) ? 'fill-amber-500' : 'fill-transparent stroke-zinc-400 stroke-2'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.536a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+          </svg>
+          {{ watchlistIds().has(company()!.id) ? 'Watching' : 'Watch' }}
+        </button>
+      </div>
       <div class="flex flex-wrap gap-2 mb-6">
         <span class="text-xs font-medium bg-zinc-100 text-zinc-600 px-2 py-1">{{ company()!.sector }}</span>
         <span class="text-xs font-medium border border-zinc-200 text-zinc-500 px-2 py-1">{{ company()!.country }}</span>

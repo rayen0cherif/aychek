@@ -17,16 +17,47 @@ export class CompanyListComponent implements OnInit {
   searchQuery = signal('');
   isLoading = signal(true);
   error = signal('');
+  watchlistIds = this.companyService.watchlistIds;
+  showWatchlistOnly = signal(false);
 
   @Output() companySelected = new EventEmitter<string>();
 
   filteredCompanies = computed(() => {
+    let filtered = this.companies();
+
+    if (this.showWatchlistOnly()) {
+      filtered = filtered.filter(c => this.watchlistIds().has(c.id));
+    }
+
     const q = this.searchQuery().toLowerCase();
-    return this.companies().filter(c =>
-      c.name.toLowerCase().includes(q) ||
-      c.sector.toLowerCase().includes(q) ||
-      c.country.toLowerCase().includes(q)
-    );
+    if (q) {
+      filtered = filtered.filter(c =>
+        c.name.toLowerCase().includes(q) ||
+        c.sector.toLowerCase().includes(q) ||
+        c.country.toLowerCase().includes(q)
+      );
+    }
+
+    return filtered;
+  });
+
+  sectorStats = computed(() => {
+    const all = this.companies();
+    if (!all.length) return [];
+    
+    const counts = new Map<string, number>();
+    for (const c of all) {
+      counts.set(c.sector, (counts.get(c.sector) || 0) + 1);
+    }
+    
+    const max = Math.max(...Array.from(counts.values()));
+    return Array.from(counts.entries())
+      .map(([name, count]) => ({
+        name,
+        count,
+        percentage: (count / max) * 100
+      }))
+      .sort((a, b) => b.count - a.count);
   });
 
   ngOnInit() {

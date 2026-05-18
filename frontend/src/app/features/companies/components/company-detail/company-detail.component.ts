@@ -14,11 +14,12 @@ export class CompanyDetailComponent implements OnInit {
   @Input() companyId!: string;
   @Output() back = new EventEmitter<void>();
 
-  private companyService = inject(CompanyService);
+  companyService = inject(CompanyService);
 
   company = signal<Company | null>(null);
   isLoading = signal(true);
   error = signal('');
+  watchlistIds = this.companyService.watchlistIds;
 
   question = signal('');
   aiResponse = signal('');
