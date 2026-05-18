@@ -43,8 +43,12 @@ If you prefer not to use Docker:
    ```sql
    CREATE DATABASE aychek;
    ```
-3. Open the `backend` folder and provide your database credentials and API key directly in `src/main/resources/application.yaml`.
-4. Run the Spring Boot server using Maven:
+3. Load sample data by running the data.sql file:
+   ```bash
+   psql -U postgres -d aychek -f backend/src/main/resources/data.sql
+   ```
+4. Open the `backend` folder and provide your database credentials and API key directly in `src/main/resources/application.yaml`.
+5. Run the Spring Boot server using Maven:
    ```bash
    mvn spring-boot:run
    ```
