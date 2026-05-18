@@ -11,7 +11,6 @@ A Company Screening prototype that enables users to browse a directory of compan
 *   **Reactive State:** Search filtering and UI updates happen instantly using Angular 18 Signals.
 
 ## Tech Stack
-
 *   **Backend:** Spring Boot 3, Java, Spring Data JPA, PostgreSQL.
 *   **Frontend:** Angular 18, Tailwind CSS.
 *   **AI Engine:** Groq API via Spring's `RestClient`.
