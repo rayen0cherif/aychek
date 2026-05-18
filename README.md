@@ -5,8 +5,8 @@ A Company Screening prototype that enables users to browse a directory of compan
 ## Features
 
 *   **Company Directory:** View companies in a responsive grid layout.
-*   **AI Integration:** Ask questions about specific companies using Groq API (LLaMA 3.1) with blazing fast inference.
-*   **Sector Chart:** A dynamic horizontal bar chart showing sector distribution.
+*   **AI Integration:** Ask questions about specific companies using Groq API (LLaMA 3.1).
+*   **Sector Chart:** A dynamic horizontal bar chart that displays the distribution of companies across different sectors.
 *   **Watchlist:** Save companies to your local favorites list (`localStorage`) and easily filter them using the "Watchlist" toggle.
 *   **Reactive State:** Search filtering and UI updates happen instantly using Angular 18 Signals.
 
